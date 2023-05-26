@@ -1,0 +1,178 @@
+{% extends 'layout.html' %}
+{% load static %}
+
+{%block content %}
+
+ 
+<!-- HTML-разметка на главной странице -->
+<div id="tutorial-overlay">
+    <div id="tutorial-content" class="container">
+      <h2>Добро пожаловать на наш сайт!</h2>
+      <p>Это небольшое обучение позволит вам ознакомиться с функционалом данного веб-сайта.</p>
+      <div id="tutorial-steps">
+        <div class="tutorial-step">
+          <h3>Шаг 1: Первые шаги</h3>
+          <p>В шапке сайта на данный момент есть регистрация и авторизация, вам необходимо зарегистрироваться. Я не стал делать все поля обязательными, но вы заполните их все, пожалуйста.</p>
+        </div>
+        <div class="tutorial-step">
+          <h3>Шаг 2: Возможности пользователя.</h3>
+          <p>После успешной регистрации у вас добавится возможность создания группы, создания студента и добавление его в группу. Так же вы можете экспортировать ваших студентов в эксель.
+            И , конечно же, есть возможность удаления,изменения,чтения данных.</p>
+        </div>
+        <div class="tutorial-step">
+          <h3 class='text-danger'>Шаг 3: Небольшая просьба!</h3>
+          <p>Самое главное - заполняйте все поля и если вдруг обнаружите ошибку, то запомните как вы ее допустили и постарайтесь передать эту информацию мне😅.</p>
+        </div>
+        <div class="tutorial-step">
+            <h3 class='text-danger'>Шаг 4: Пока веб-сайт в режиме тестирования и работать будет медленно т.к поставлю его на бесплатный хостинг</h3>
+            <p>Но вам не о чем беспокоиться, таким способом мы его протестируем, я его допишу и уже захостим на реальный. </p>
+          </div>
+          <div class="tutorial-step">
+            <h3 class='text-danger'>Шаг 5: Приятного пользования, у Вас все получится!😊😊😊</h3>
+            <p>Надеюсь позже он станет очень полезным(еще раз напоминаю, что он пока на стадии разработки и был сделан в кратчайшие сроки😅😅😅)Удачи!. </p>
+          </div>
+        <!-- Добавьте дополнительные шаги по мере необходимости -->
+      </div>
+      <div id="tutorial-navigation" class="d-flex justify-content-between mt-4">
+        <button id="tutorial-prev" class="btn btn-secondary" disabled>Назад</button>
+        <button id="tutorial-next" class="btn btn-primary">Далее</button>
+        <button id="tutorial-close" class="btn btn-danger">Закрыть</button>
+      </div>
+    </div>
+  </div>
+  
+  <!-- Ваш основной контент на главной странице -->
+  <div class="container">
+    <h1 class='text-center'>Добро пожаловать на главную страницу!</h1>
+    <p>Здесь вы можете найти много полезной информации.</p>
+  </div>
+  <div class="container mt-4">
+    <button id="start-tutorial-button" class="btn btn-primary">Начать обучение</button>
+  </div>
+  <!-- Остальной контент страницы -->
+  
+  <!-- CSS-стили для обучающего скрипта -->
+  <style>
+    #tutorial-overlay {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background-color: rgba(0, 0, 0, 0.7);
+      display: none;
+      z-index: 9999;
+    }
+  
+    #tutorial-content {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      background-color: #fff;
+      padding: 20px;
+      width: 800px;
+      text-align: center;
+    }
+  
+    .tutorial-step {
+      display: none;
+    }
+  
+    .tutorial-step.active {
+      display: block;
+    }
+  
+    #tutorial-navigation {
+      margin-top: 20px;
+    }
+  
+    #tutorial-navigation button {
+      margin: 0 5px;
+    }
+  </style>
+  
+  <!-- JavaScript-код для обучающего скрипта -->
+  <script>
+    var currentStep = 0;
+    var tutorialSteps = document.querySelectorAll('.tutorial-step');
+    var tutorialPrevButton = document.getElementById('tutorial-prev');
+    var tutorialNextButton = document.getElementById('tutorial-next');
+    var tutorialCloseButton = document.getElementById('tutorial-close');
+  
+    // Функция показа обучающего скрипта
+    function showTutorial() {
+      var tutorialOverlay = document.getElementById('tutorial-overlay');
+      tutorialOverlay.style.display = 'block';
+      showStep(currentStep);
+    }
+  
+    // Функция закрытия обучающего скрипта
+    function closeTutorial() {
+      var tutorialOverlay = document.getElementById('tutorial-overlay');
+      tutorialOverlay.style.display = 'none';
+    }
+  
+    // Функция отображения текущего шага
+    function showStep(step) {
+      for (var i = 0; i < tutorialSteps.length; i++) {
+        tutorialSteps[i].classList.remove('active');
+      }
+      tutorialSteps[step].classList.add('active');
+  
+      // Обновление состояния кнопок навигации
+      if (step === 0) {
+        tutorialPrevButton.disabled = true;
+      } else {
+        tutorialPrevButton.disabled = false;
+      }
+  
+      if (step === tutorialSteps.length - 1) {
+        tutorialNextButton.textContent = 'Завершить';
+      } else {
+        tutorialNextButton.textContent = 'Далее';
+      }
+    }
+  
+    // Обработчик клика на кнопку "Назад"
+    tutorialPrevButton.addEventListener('click', function() {
+      if (currentStep > 0) {
+        currentStep--;
+        showStep(currentStep);
+      }
+    });
+  
+    // Обработчик клика на кнопку "Далее"
+    tutorialNextButton.addEventListener('click', function() {
+      if (currentStep < tutorialSteps.length - 1) {
+        currentStep++;
+        showStep(currentStep);
+      } else {
+        closeTutorial();
+      }
+    });
+  
+    // Обработчик клика на кнопку "Закрыть"
+    tutorialCloseButton.addEventListener('click', closeTutorial);
+  
+    // Показать обучающий скрипт при загрузке страницы
+    window.addEventListener('load', showTutorial);
+    var startTutorialButton = document.getElementById('start-tutorial-button');
+  startTutorialButton.addEventListener('click', function() {
+    currentStep = 0; // Сбрасываем текущий шаг на первый
+    showStep(currentStep);
+    showTutorial();
+  });
+  </script>
+  
+ 
+ 
+
+
+
+ 
+
+ 
+           
+
+{% endblock %}

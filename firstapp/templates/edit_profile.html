@@ -1,0 +1,22 @@
+ 
+{% extends 'layout.html' %}
+ 
+{% load crispy_forms_tags %}
+ 
+{% block content %}
+ 
+   
+  <h4>Ваш логин для входа на сайт <span class='text-primary'>{{user.username}}</span></h4>
+  
+
+  <form method="post" enctype="multipart/form-data">
+    {% csrf_token %}
+    {{user_form|crispy}}
+    {{profile_form |crispy}}
+    {{ experience_form|crispy }}
+  
+ <br>
+    <button class='btn btn-primary' type="submit">Сохранить</button>
+  </form>
+ 
+{% endblock %}

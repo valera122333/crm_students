@@ -1,0 +1,68 @@
+{% extends 'layout.html' %}
+ 
+{% load crispy_forms_tags %}
+ 
+{% block content %}
+ 
+<form method="GET" action="{% url 'user_list' %}">
+    {{ filter_form|crispy }}
+    <br>
+    <button class='btn btn-primary' type="submit">Применить фильтр</button>
+    <br>
+     
+</form>
+<br>
+<a href="{{ export_url }}">Экспорт в Excel с учетом фильтров</a>
+<br>
+<br>
+<table class="table table-striped table-bordered table-hover table-dark">
+    <thead>
+      <tr>
+        <th scope="col">#</th>
+        <th>Имя</th>
+        <th>Фамилия</th>
+        <th>направление</th>
+        <th>Стаж(<span class='text-primary'>в месяцах</span>)</th>
+        <th>Образование</th>
+        <th>Возраст</th>
+        <th>Место обучения</th>
+        <th>Достижения</th>
+        <th>Группы</th>
+     
+  
+        <!-- Добавьте другие поля, которые вам нужны -->
+      </tr>
+    </thead>
+    <tbody>
+      {% for teacher in teachers %}
+        <tr>    
+                <th scope="row">{{forloop.counter}}</th>
+                <td>{{teacher.first_name}}</td>
+                <td>{{teacher.last_name}}</td>
+                <td>{{ teacher.profile.direction }}</td>
+                <td>{{ teacher.profile.experience }}<span class='text-primary'> месяца(ев)</span></td> 
+                <td>{{teacher.profile.education}}</td>
+                <td>{{teacher.profile.age}}</td>
+                <td>{{teacher.profile.place_education}}</td>
+                <td>{{teacher.profile.atchievments}}</td>
+                <td>
+                  {% for group in teacher.profile.user.listgroups_set.all %}
+    <a href="{% url 'teacher_group' teacher_id=teacher.id group_id=group.id %}">{{ group.name }}</a>
+    {% if not forloop.last %}, {% endif %}
+{% empty %}
+    Нет доступных групп
+{% endfor %}
+
+                </td>
+                
+        </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+  {% comment %} <a href="{% url 'export_teachers_to_excel' %}" class="btn btn-primary">Экспорт <span class='text-danger'>ВСЕХ</span> педагогов Excel</a> {% endcomment %}
+  <style>
+    a{
+        text-decoration: none;
+    }
+</style>
+  {% endblock %}

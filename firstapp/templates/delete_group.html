@@ -1,0 +1,15 @@
+
+
+{% extends 'layout.html' %}
+{% load static %}
+{%block content %}
+<h1 class='text-center'>Удаление группы</h1>
+<p>Вы действительно хотите удалить группу <span class='text-danger'> "{{ group.name }}"?</span></p>
+<p class='text-danger'>Будьте внимательны, при удалении группы так же удалятся ученики этой группы!</p>
+ 
+<form method="post">
+  {% csrf_token %}
+ 
+  <button class='btn btn-danger'type="submit">Удалить группу</button>
+</form>
+{% endblock %} 

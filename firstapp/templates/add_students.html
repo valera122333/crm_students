@@ -1,0 +1,12 @@
+{% extends 'layout.html' %}
+{% load static %}
+{% load crispy_forms_tags %}
+{%block content %}
+
+<form action ="" method = "POST">
+    {% csrf_token %}
+    {{form|crispy}}
+   <input type ="submit" class='btn btn-primary' value ="Добавить студента">
+    
+ 
+{% endblock %} 

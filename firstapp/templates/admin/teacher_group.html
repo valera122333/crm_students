@@ -1,0 +1,62 @@
+{% extends 'layout.html' %}
+
+{% block content %}
+
+<!-- Вывод информации о группе -->
+<h2 class='text-center '>Группа: <span class='text-primary'>{{ group.name }}<span></h2>
+<p>Описание: <span class='text-primary'>{{ group.description }}<span></p>
+
+<!-- Вывод учеников группы -->
+{% if students %}
+  <h3>Ученики:</h3>
+  <div class="container mt-3">
+    <h2 class='text-center'> Все студенты педагога  <span class='text-primary'>{{teacher.first_name}} {{teacher.last_name}}</span></h2> 
+     <table class="table table-striped table-bordered table-hover table-dark">
+         <thead>
+             <tr>
+                 <th scope="col">#</th>
+                 <th scope="col">ФИО</th>
+                 <th scope="col">Возраст</th>
+                 <th scope="col">Дата рождения</th>
+                 <th scope="col">Место обучения</th>
+                 <th scope="col">Пол</th>
+                 <th scope="col">ПФДО</th>
+                 <th scope="col">ФИО родителей</th>
+                 <th scope="col">Контактные данные</th>
+                 <th scope="col">Достижения</th>
+                
+                 
+             </tr>
+         </thead>
+         <tbody>
+           {% for student in students %}
+             <tr>
+                 <th scope="row">{{forloop.counter}}</th>
+                 <td>{{student.fio}}</td>
+                 <td>{{student.age}}</td>
+                 <td>{{student.birsday}}</td>
+                 <td>{{student.place_learning}}</td>
+                 <td>{{student.pol}}</td>
+                 <td>{{student.sertificat_pfdo}}</td>
+                 <td>{{student.fio_parents}}</td>
+                 <td>{{student.contact_data}}</td>
+                 <td>{{student.atchievments}}</td>
+                  
+                  
+                 
+               
+             </tr>
+             {%empty%}
+             <h4 class='text-center text-danger'>Вы еще не добавили студентов</h4>
+             {% endfor %}
+             
+         </tbody>
+     </table>
+{% else %}
+  <p>В данной группе нет учеников.</p>
+{% endif %}
+
+<!-- Добавьте другую информацию о группе, если необходимо -->
+
+{% endblock %}
+

@@ -1,0 +1,13 @@
+{% extends 'layout.html' %}
+{% load static %}
+{% load crispy_forms_tags %}
+{%block content %}
+
+<h1 class='text-center'>Регистрация</h1>
+<h5 class='text-center text-primary'>заполните все поля</h5>
+<form action ="" method = "POST">
+ {% csrf_token %}
+ {{form|crispy}}
+ {{profile_form|crispy}}
+<input type ="submit" class='btn btn-primary' value ="зарегистрироваться">
+{% endblock %}
